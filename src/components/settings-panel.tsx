@@ -34,8 +34,8 @@ interface SettingsPanelProps {
 const predefinedBackgrounds = [
   {
     name: "Cosmic",
-    url: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=320&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=2070&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=320&auto=format&fit=crop",
     hint: "galaxy stars",
   },
   {
@@ -46,8 +46,8 @@ const predefinedBackgrounds = [
   },
   {
     name: "Beach",
-    url: "https://images.unsplash.com/photo-1507525428034-b723a996f3d1?q=80&w=2070&auto=format&fit=crop",
-    thumbnail: "https://images.unsplash.com/photo-1507525428034-b723a996f3d1?q=80&w=320&auto=format&fit=crop",
+    url: "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=2070&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?q=80&w=320&auto=format&fit=crop",
     hint: "beach ocean",
   },
   {
