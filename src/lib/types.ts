@@ -1,3 +1,4 @@
+
 export type TimeFormat = "12h" | "24h";
 
 export type Theme = {
@@ -38,4 +39,9 @@ export const birthdays: Birthday[] = [
   { name: 'Papa', month: 3, day: 27 },     // April 27
   { name: 'Mummy', month: 9, day: 5 },  // October 5
   { name: 'Grandmother', month: 4, day: 7 }, // May 7
+  { name: 'Mamuni Apa', month: 10, day: 3 }, // November 3
+  { name: 'Ansh Bhai', month: 6, day: 11 },  // July 11
+  { name: 'Manas Piyusa', month: 7, day: 2 },// August 2
+  { name: 'Aja', month: 1, day: 12 },      // February 12
+  { name: 'Aaima', month: 6, day: 19 },      // July 19
 ];
