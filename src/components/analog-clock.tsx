@@ -31,8 +31,28 @@ export default function AnalogClock({ shape }: AnalogClockProps) {
     oval: "rounded-[50%] w-72 h-96",
   };
 
+  const numbers = Array.from({ length: 12 }, (_, i) => i + 1);
+
+  const getNumberPosition = (hour: number) => {
+    const angle = (hour * 30) - 90; // -90 to start from the top
+    const angleInRad = (angle * Math.PI) / 180;
+    const x = 50 + 42 * Math.cos(angleInRad);
+    const y = 50 + 42 * Math.sin(angleInRad);
+    return { left: `${x}%`, top: `${y}%` };
+  };
+
   return (
     <div className={cn("relative border-4 border-primary bg-background/50 backdrop-blur-sm shadow-lg", shapeClasses[shape])} style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
+      {numbers.map((hour) => (
+        <div
+          key={hour}
+          className="absolute -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-foreground"
+          style={getNumberPosition(hour)}
+        >
+          {hour}
+        </div>
+      ))}
+      
       {/* Hour hand */}
       <div
         className="absolute top-1/2 left-1/2 w-1 h-1/4 origin-top bg-foreground"

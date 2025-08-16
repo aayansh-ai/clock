@@ -131,7 +131,10 @@ export default function Home() {
           "bg-black/50": !!customBackground,
         })}
       />
-      <div className="relative z-10 flex flex-col items-center gap-8">
+      <div className={cn(
+          "relative z-10 flex items-center justify-center gap-8",
+          clockType === 'digital' ? 'flex-col' : 'flex-col md:flex-row'
+      )}>
         {clockType === 'digital' ? (
           <Clock timeFormat={timeFormat} showDate={showDate} />
         ) : (
