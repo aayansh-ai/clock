@@ -144,40 +144,39 @@ export default function Home() {
       </div>
 
 
-      <div className="absolute bottom-4 left-4 z-20 flex gap-2">
-        <Button variant="ghost" size="icon" onClick={() => setClockType(clockType === 'digital' ? 'analog' : 'digital')} className="rounded-full hover:bg-accent/80" aria-label="Toggle clock type">
+      <div className="absolute bottom-4 left-4 z-20" />
+
+
+      <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+         <Button variant="ghost" size="icon" onClick={() => setClockType(clockType === 'digital' ? 'analog' : 'digital')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Toggle clock type">
           {clockType === 'digital' ? <TabletSmartphone className="h-6 w-6" /> : <Clock4 className="h-6 w-6" />}
         </Button>
         {clockType === 'analog' && (
           <>
-            <Button variant={dialShape === 'round' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('round')} className="rounded-full hover:bg-accent/80" aria-label="Round dial">
+            <Button variant={dialShape === 'round' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('round')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Round dial">
               <Circle className="h-6 w-6" />
             </Button>
-            <Button variant={dialShape === 'square' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('square')} className="rounded-full hover:bg-accent/80" aria-label="Square dial">
+            <Button variant={dialShape === 'square' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('square')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Square dial">
               <Square className="h-6 w-6" />
             </Button>
-            <Button variant={dialShape === 'oval' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('oval')} className="rounded-full hover:bg-accent/80" aria-label="Oval dial">
+            <Button variant={dialShape === 'oval' ? 'secondary' : 'ghost'} size="icon" onClick={() => setDialShape('oval')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Oval dial">
               <Ellipsis className="h-6 w-6" />
             </Button>
           </>
         )}
          {clockType === 'digital' && (
-            <Button variant="ghost" size="icon" onClick={() => setTimeFormat(timeFormat === '12h' ? '24h' : '12h')} className="rounded-full hover:bg-accent/80" aria-label="Toggle time format">
+            <Button variant="ghost" size="icon" onClick={() => setTimeFormat(timeFormat === '12h' ? '24h' : '12h')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Toggle time format">
                 <span className="text-lg font-bold">{timeFormat === '12h' ? '12h' : '24h'}</span>
             </Button>
         )}
-        <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-accent/80" aria-label="Yearly Calendar">
+        <Button asChild variant="ghost" size="icon" className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Yearly Calendar">
           <Link href="/calendar">
             <CalendarIcon className="h-6 w-6" />
           </Link>
         </Button>
-        <Button variant="ghost" size="icon" onClick={() => setShowBirthdayList(true)} className="rounded-full hover:bg-accent/80" aria-label="Show birthdays">
+        <Button variant="ghost" size="icon" onClick={() => setShowBirthdayList(true)} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Show birthdays">
             <Gift className="h-6 w-6" />
         </Button>
-      </div>
-
-
-      <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
         <Button
           variant="ghost"
           size="icon"
