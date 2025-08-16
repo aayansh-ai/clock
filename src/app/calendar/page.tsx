@@ -18,18 +18,11 @@ export default function CalendarPage() {
     setBirthdayPerson(birthday);
   };
   
-  const getCelebrationMessage = () => {
-    if (!birthdayPerson) return "";
-    if (birthdayPerson.message) return birthdayPerson.message;
-    if (birthdayPerson.name === 'Aayansh') return "Happy Birthday Aayansh!!!";
-    return `Happy Birthday ${birthdayPerson.name}`;
-  }
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       {birthdayPerson && (
         <BirthdayCelebration 
-          message={getCelebrationMessage()} 
+          birthday={birthdayPerson}
           onComplete={() => setBirthdayPerson(null)} 
         />
       )}

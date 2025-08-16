@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { Birthday } from '@/lib/types';
 
 interface Particle {
   id: number;
@@ -14,16 +15,24 @@ interface Particle {
 }
 
 interface BirthdayCelebrationProps {
-  message: string;
+  birthday: Birthday;
   onComplete: () => void;
 }
 
 const particleTypes = ['🎉', '🎊', '🎈', '🎁', '🎂', '✨', '💖', '🌟'];
 
-export default function BirthdayCelebration({ message, onComplete }: BirthdayCelebrationProps) {
+const getCelebrationMessage = (birthday: Birthday) => {
+  if (birthday.message) return birthday.message;
+  return `Happy Birthday ${birthday.name}`;
+};
+
+export default function BirthdayCelebration({ birthday, onComplete }: BirthdayCelebrationProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
+    setMessage(getCelebrationMessage(birthday));
+
     const initialParticles = Array.from({ length: 300 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -53,7 +62,7 @@ export default function BirthdayCelebration({ message, onComplete }: BirthdayCel
       clearTimeout(celebrationTimeout);
       cancelAnimationFrame(animationFrame);
     };
-  }, [onComplete]);
+  }, [birthday, onComplete]);
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">

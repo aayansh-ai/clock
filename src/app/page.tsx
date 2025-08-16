@@ -103,13 +103,6 @@ export default function Home() {
   const handleBirthdayClick = (birthday: Birthday) => {
     setBirthdayPerson(birthday);
   };
-
-  const getCelebrationMessage = () => {
-    if (!birthdayPerson) return "";
-    if (birthdayPerson.message) return birthdayPerson.message;
-    if (birthdayPerson.name === 'Aayansh') return "Happy Birthday Aayansh!!!";
-    return `Happy Birthday ${birthdayPerson.name}`;
-  }
   
   const handleBirthdayFromList = (birthday: Birthday) => {
     handleBirthdayClick(birthday);
@@ -126,7 +119,7 @@ export default function Home() {
     >
       {birthdayPerson && (
         <BirthdayCelebration 
-          message={getCelebrationMessage()} 
+          birthday={birthdayPerson} 
           onComplete={() => setBirthdayPerson(null)} 
         />
       )}
