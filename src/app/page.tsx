@@ -11,7 +11,6 @@ import MonthlyCalendar from "@/components/monthly-calendar";
 import RetroClock from "@/components/retro-clock";
 import SettingsPanel from "@/components/settings-panel";
 import type { TimeFormat, ClockType, DialShape, Birthday } from "@/lib/types";
-import { birthdays } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -111,6 +110,11 @@ export default function Home() {
     if (birthdayPerson.name === 'Aayansh') return "Happy Birthday Aayansh!!!";
     return `Happy Birthday ${birthdayPerson.name}`;
   }
+  
+  const handleBirthdayFromList = (birthday: Birthday) => {
+    handleBirthdayClick(birthday);
+    setShowBirthdayList(false);
+  }
 
   return (
     <main
@@ -126,7 +130,11 @@ export default function Home() {
           onComplete={() => setBirthdayPerson(null)} 
         />
       )}
-       <BirthdayListDialog open={showBirthdayList} onOpenChange={setShowBirthdayList} />
+       <BirthdayListDialog 
+        open={showBirthdayList} 
+        onOpenChange={setShowBirthdayList}
+        onBirthdayClick={handleBirthdayFromList}
+      />
       <div
         className={cn("absolute inset-0 backdrop-blur-sm", {
           "bg-black/50": !!customBackground,

@@ -9,16 +9,18 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { birthdays } from '@/lib/types';
+import { birthdays, type Birthday } from '@/lib/types';
 import { Gift, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import { Button } from './ui/button';
 
 interface BirthdayListDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onBirthdayClick: (birthday: Birthday) => void;
 }
 
-export default function BirthdayListDialog({ open, onOpenChange }: BirthdayListDialogProps) {
+export default function BirthdayListDialog({ open, onOpenChange, onBirthdayClick }: BirthdayListDialogProps) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -49,9 +51,14 @@ export default function BirthdayListDialog({ open, onOpenChange }: BirthdayListD
           </DialogDescription>
         </DialogHeader>
         <ScrollArea className="max-h-[60vh] pr-4">
-          <div className="space-y-4 py-4">
+          <div className="space-y-2 py-4">
             {upcomingBirthdays.map((b) => (
-              <div key={b.name} className="flex items-center justify-between rounded-lg border p-4 shadow-sm transition-all hover:shadow-md">
+              <Button 
+                key={b.name} 
+                variant="ghost" 
+                className="flex h-auto w-full items-center justify-between rounded-lg border p-4 text-left shadow-sm transition-all hover:shadow-md"
+                onClick={() => onBirthdayClick(b)}
+              >
                 <div className="flex flex-col">
                   <p className="font-semibold text-foreground">{b.name}</p>
                   <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -63,7 +70,7 @@ export default function BirthdayListDialog({ open, onOpenChange }: BirthdayListD
                   <p className="font-bold text-lg text-primary">{b.daysUntil}</p>
                   <p className="text-xs text-muted-foreground">days away</p>
                 </div>
-              </div>
+              </Button>
             ))}
           </div>
         </ScrollArea>
