@@ -6,9 +6,12 @@ import { useTheme } from "@/hooks/use-theme";
 import { useWakeLock } from "@/hooks/use-wake-lock";
 import Clock from "@/components/clock";
 import AnalogClock from "@/components/analog-clock";
+import SettingsPanel from "@/components/settings-panel";
 import type { TimeFormat, ClockType, DialShape } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings } from "lucide-react";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
@@ -133,7 +136,7 @@ export default function Home() {
       </div>
 
 
-      <div className="absolute bottom-4 right-4 z-20 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
         <Button
           variant="ghost"
           size="icon"
@@ -143,6 +146,38 @@ export default function Home() {
         >
           {theme === 'dark' ? <Sun className="h-6 w-6" /> : <Moon className="h-6 w-6" />}
         </Button>
+        <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-12 w-12 rounded-full hover:bg-accent/80"
+                aria-label="Open settings"
+              >
+                <Settings className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent className="w-[400px] sm:w-[540px]">
+              <SheetHeader>
+                <SheetTitle>Settings</SheetTitle>
+              </SheetHeader>
+              <ScrollArea className="h-[calc(100%-4rem)]">
+                <SettingsPanel
+                  timeFormat={timeFormat}
+                  setTimeFormat={setTimeFormat}
+                  showDate={showDate}
+                  setShowDate={setShowDate}
+                  selectedTheme={theme}
+                  setTheme={setTheme}
+                  keepScreenOn={keepScreenOn}
+                  setKeepScreenOn={setKeepScreenOn}
+                  isWakeLockSupported={isSupported}
+                  customBackground={customBackground}
+                  setCustomBackground={setCustomBackground}
+                />
+              </ScrollArea>
+            </SheetContent>
+          </Sheet>
       </div>
 
     </main>
