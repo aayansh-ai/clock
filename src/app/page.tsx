@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
