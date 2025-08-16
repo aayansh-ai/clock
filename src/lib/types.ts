@@ -22,7 +22,7 @@ export type Theme = {
   };
 };
 
-export type ClockType = "digital" | "analog";
+export type ClockType = "digital" | "analog" | "retro";
 export type DialShape = "round" | "square" | "oval";
 
 export interface Birthday {

@@ -8,12 +8,13 @@ import { useWakeLock } from "@/hooks/use-wake-lock";
 import Clock from "@/components/clock";
 import AnalogClock from "@/components/analog-clock";
 import MonthlyCalendar from "@/components/monthly-calendar";
+import RetroClock from "@/components/retro-clock";
 import SettingsPanel from "@/components/settings-panel";
 import type { TimeFormat, ClockType, DialShape } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon, Gift } from "lucide-react";
+import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon, Gift, Monitor } from "lucide-react";
 import { cn } from "@/lib/utils";
 import BirthdayCelebration from "@/components/BirthdayCelebration";
 import BirthdayListDialog from "@/components/BirthdayListDialog";
@@ -131,27 +132,38 @@ export default function Home() {
           "bg-black/50": !!customBackground,
         })}
       />
-      <div className={cn(
-          "relative z-10 flex items-center justify-center gap-8",
-          clockType === 'digital' ? 'flex-col' : 'flex-col md:flex-row'
-      )}>
-        {clockType === 'digital' ? (
-          <Clock timeFormat={timeFormat} showDate={showDate} />
-        ) : (
-          <AnalogClock shape={dialShape} />
-        )}
+      
+      {clockType === 'retro' ? (
+        <RetroClock />
+      ) : (
         <div className={cn(
-          "transition-all duration-500 ease-in-out",
-          showDate ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            "relative z-10 flex items-center justify-center gap-8",
+            clockType === 'digital' ? 'flex-col' : 'flex-col md:flex-row'
         )}>
-          {showDate && <MonthlyCalendar onBirthdayClick={handleBirthdayClick} />}
+          {clockType === 'digital' ? (
+            <Clock timeFormat={timeFormat} showDate={showDate} />
+          ) : (
+            <AnalogClock shape={dialShape} />
+          )}
+          <div className={cn(
+            "transition-all duration-500 ease-in-out",
+            showDate ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          )}>
+            {showDate && <MonthlyCalendar onBirthdayClick={handleBirthdayClick} />}
+          </div>
         </div>
-      </div>
+      )}
 
 
       <div className="absolute top-1/2 right-4 z-20 flex -translate-y-1/2 flex-col items-center gap-2">
-         <Button variant="ghost" size="icon" onClick={() => setClockType(clockType === 'digital' ? 'analog' : 'digital')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Toggle clock type">
-          {clockType === 'digital' ? <TabletSmartphone className="h-6 w-6" /> : <Clock4 className="h-6 w-6" />}
+         <Button variant="ghost" size="icon" onClick={() => setClockType('digital')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Digital Clock">
+           <TabletSmartphone className="h-6 w-6" />
+        </Button>
+         <Button variant="ghost" size="icon" onClick={() => setClockType('analog')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Analog Clock">
+           <Clock4 className="h-6 w-6" />
+        </Button>
+        <Button variant="ghost" size="icon" onClick={() => setClockType('retro')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Retro Clock">
+           <Monitor className="h-6 w-6" />
         </Button>
         {clockType === 'analog' && (
           <>
