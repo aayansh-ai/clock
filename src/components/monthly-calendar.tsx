@@ -19,7 +19,7 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
     const birthdaysOnDay = birthdays.filter(b => b.month === day.getMonth() && b.day === day.getDate());
     
     if (birthdaysOnDay.length > 0) {
-      // Prioritize the birthday entry that has a custom message.
+      // Prioritize the birthday entry that has a custom message for shared birthdays.
       const birthdayToCelebrate = birthdaysOnDay.find(b => !!b.message) || birthdaysOnDay[0];
       onBirthdayClick(birthdayToCelebrate);
     }
