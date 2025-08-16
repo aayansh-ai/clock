@@ -78,7 +78,7 @@ export default function Home() {
 
   return (
     <main
-      className="relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-background text-foreground transition-colors duration-300"
+      className="relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-background text-foreground transition-all duration-300"
       style={{
         backgroundImage: customBackground ? `url(${customBackground})` : "none",
       }}

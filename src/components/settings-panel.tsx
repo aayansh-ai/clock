@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Image from "next/image";
 
 interface SettingsPanelProps {
   timeFormat: TimeFormat;
@@ -28,6 +29,34 @@ interface SettingsPanelProps {
   customBackground: string;
   setCustomBackground: (url: string) => void;
 }
+
+const predefinedBackgrounds = [
+  {
+    name: "Cosmic",
+    url: "https://placehold.co/1920x1080.png",
+    thumbnail: "https://placehold.co/320x180.png",
+    hint: "galaxy stars",
+  },
+  {
+    name: "Forest",
+    url: "https://placehold.co/1920x1080.png",
+    thumbnail: "https://placehold.co/320x180.png",
+    hint: "forest trees",
+  },
+  {
+    name: "Beach",
+    url: "https://placehold.co/1920x1080.png",
+    thumbnail: "https://placehold.co/320x180.png",
+    hint: "beach ocean",
+  },
+  {
+    name: "Mountain",
+    url: "https://placehold.co/1920x1080.png",
+    thumbnail: "https://placehold.co/320x180.png",
+    hint: "mountain snow",
+  },
+];
+
 
 export default function SettingsPanel({
   timeFormat,
@@ -88,6 +117,31 @@ export default function SettingsPanel({
                 Clear
               </Button>
             )}
+          </div>
+        </div>
+        <div className="space-y-2 rounded-lg border p-3">
+          <Label>Predefined Backgrounds</Label>
+          <div className="grid grid-cols-2 gap-2">
+            {predefinedBackgrounds.map((bg) => (
+              <button
+                key={bg.name}
+                onClick={() => setCustomBackground(bg.url)}
+                className="group relative aspect-video w-full overflow-hidden rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              >
+                <Image
+                  src={bg.thumbnail}
+                  alt={bg.name}
+                  width={320}
+                  height={180}
+                  data-ai-hint={bg.hint}
+                  className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/30" />
+                <span className="absolute bottom-1 left-2 text-xs font-semibold text-white">
+                  {bg.name}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
         <Label>Theme</Label>
