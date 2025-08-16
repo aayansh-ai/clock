@@ -4,8 +4,8 @@
 import { useState, useEffect } from 'react';
 
 const SevenSegment = ({ digit, glow = false }: { digit: string, glow?: boolean }) => (
-  <span className={`font-mono text-7xl md:text-8xl lg:text-9xl ${glow ? 'text-red-500' : 'text-red-500/20'}`} style={{ textShadow: glow ? '0 0 15px rgba(255,0,0,0.7)' : 'none' }}>
-    {digit}
+  <span className={`font-segment text-7xl md:text-8xl lg:text-9xl ${glow ? 'text-red-500' : 'text-red-500/20'}`} style={{ textShadow: glow ? '0 0 15px rgba(255,0,0,0.7)' : 'none' }}>
+    {digit === ' ' ? <span className="opacity-0">0</span> : digit}
   </span>
 );
 
@@ -32,7 +32,7 @@ export default function RetroClock() {
     return () => clearInterval(timerId);
   }, []);
 
-  const formatTwoDigits = (n: number) => n.toString().padStart(2, '8');
+  const formatTwoDigits = (n: number) => n.toString().padStart(2, '0');
 
   const date = formatTwoDigits(time.getDate());
   const month = formatTwoDigits(time.getMonth() + 1);
