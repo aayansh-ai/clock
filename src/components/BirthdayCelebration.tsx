@@ -3,44 +3,46 @@
 
 import { useEffect, useState } from 'react';
 
-interface Confetto {
+interface Particle {
   id: number;
   x: number;
   y: number;
   rotation: number;
   opacity: number;
   color: string;
+  emoji: string;
 }
 
+const particleTypes = ['🎉', '🎊', '🎈', '🎁', '🎂', '✨', '💖', '🌟'];
+
 export default function BirthdayCelebration({ onComplete }: { onComplete: () => void }) {
-  const [confetti, setConfetti] = useState<Confetto[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Initialize confetti off-screen at the top
-    const initialConfetti = Array.from({ length: 200 }).map((_, i) => ({
+    const initialParticles = Array.from({ length: 300 }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
-      y: -20 - Math.random() * 80, // Start above the screen
+      y: -20 - Math.random() * 100, // Start above the screen
       rotation: Math.random() * 360,
       opacity: 1,
-      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+      emoji: particleTypes[i % particleTypes.length],
     }));
-    setConfetti(initialConfetti);
+    setParticles(initialParticles);
 
-    // Animate confetti falling
     const animationFrame = requestAnimationFrame(() => {
-        const finalConfetti = initialConfetti.map(c => ({
-            ...c,
-            y: 120, // Fall to bottom
+        const finalParticles = initialParticles.map(p => ({
+            ...p,
+            y: 120 + Math.random() * 20, // Fall to bottom and slightly beyond
             opacity: 0,
+            rotation: p.rotation + Math.random() * 360 - 180,
         }));
-        setConfetti(finalConfetti);
+        setParticles(finalParticles);
     });
-    
 
     const celebrationTimeout = setTimeout(() => {
       onComplete();
-    }, 5000); // Celebration lasts for 5 seconds
+    }, 7000); // Celebration lasts for 7 seconds
 
     return () => {
       clearTimeout(celebrationTimeout);
@@ -49,27 +51,45 @@ export default function BirthdayCelebration({ onComplete }: { onComplete: () => 
   }, [onComplete]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
-      <div className="absolute text-center">
-        <h1 className="animate-pulse text-5xl font-bold text-white" style={{ textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)), 0 0 40px #ff00de, 0 0 70px #ff00de' }}>
-          Happy Birthday Aayansh!!!
-        </h1>
-      </div>
-      {confetti.map((c) => (
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+       <div className="absolute inset-0 bg-black/50" />
+       <div className="flex h-full w-full items-center justify-center">
+            <h1 
+                className="animate-pulse text-8xl font-black tracking-tighter text-transparent" 
+                style={{ 
+                    WebkitTextStroke: '1px white',
+                    background: 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff)',
+                    backgroundSize: '200% 200%',
+                    backgroundClip: 'text',
+                    animation: 'rainbow-text 3s ease-in-out infinite, pulse 1.5s infinite',
+                }}
+            >
+            Happy Birthday Aayansh!!!
+            </h1>
+       </div>
+      {particles.map((p) => (
         <div
-          key={c.id}
-          className="absolute text-2xl"
+          key={p.id}
+          className="absolute text-3xl"
           style={{
-            left: `${c.x}vw`,
-            top: `${c.y}vh`,
-            transform: `rotate(${c.rotation}deg)`,
-            opacity: c.opacity,
-            transition: `top 5s linear, opacity 5s linear`,
+            left: `${p.x}vw`,
+            top: `${p.y}vh`,
+            transform: `rotate(${p.rotation}deg)`,
+            opacity: p.opacity,
+            transition: `top ${4 + Math.random() * 3}s linear, opacity ${4 + Math.random() * 3}s linear, transform ${4 + Math.random() * 3}s linear`,
+            color: p.color,
           }}
         >
-          <div style={{ color: c.color }}>{['🎉', '🎊', '🎈', '🎁', '🎂'][c.id % 5]}</div>
+          {p.emoji}
         </div>
       ))}
+      <style jsx>{`
+        @keyframes rainbow-text { 
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
+        }
+      `}</style>
     </div>
   );
 }
