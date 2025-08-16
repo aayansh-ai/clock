@@ -33,6 +33,6 @@ export interface Birthday {
 
 export const birthdays: Birthday[] = [
   { name: 'Aayansh', month: 8, day: 18 }, // September 18
-  { name: 'Papa', month: 3, day: 2 },     // April 2
+  { name: 'Papa', month: 3, day: 27 },     // April 27
   { name: 'Mummy', month: 9, day: 5 },  // October 5
 ];
