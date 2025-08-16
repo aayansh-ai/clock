@@ -98,12 +98,12 @@ export default function Home() {
       className="group relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-background text-foreground transition-all duration-300"
       style={{
         backgroundImage: customBackground ? `url(${customBackground})` : "none",
+        backgroundColor: `hsl(var(--background))`,
       }}
     >
       <div
-        className={cn("absolute inset-0 bg-background/50 backdrop-blur-sm", {
+        className={cn("absolute inset-0 backdrop-blur-sm", {
           "bg-black/50": !!customBackground,
-          "bg-transparent backdrop-blur-none": !customBackground,
         })}
       />
       <div className="relative z-10">

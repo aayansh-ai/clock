@@ -14,6 +14,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image from "next/image";
+import { themes } from "@/lib/themes";
+import { cn } from "@/lib/utils";
 
 interface SettingsPanelProps {
   timeFormat: TimeFormat;
@@ -84,12 +86,6 @@ export default function SettingsPanel({
     }
   };
 
-  const isNightMode = selectedTheme === "dark";
-
-  const toggleNightMode = () => {
-    setTheme(isNightMode ? "default" : "dark");
-  };
-
   return (
     <div className="space-y-8 p-1 pt-4">
       <div className="space-y-4 px-4">
@@ -116,13 +112,32 @@ export default function SettingsPanel({
 
       <div className="space-y-4 px-4">
         <h3 className="font-semibold text-foreground">Appearance</h3>
-         <div className="flex items-center justify-between rounded-lg border p-3">
-          <Label htmlFor="night-mode">Night Mode</Label>
-          <Switch
-            id="night-mode"
-            checked={isNightMode}
-            onCheckedChange={toggleNightMode}
-          />
+        <div className="space-y-2 rounded-lg border p-3">
+            <Label>Color Theme</Label>
+            <div className="grid grid-cols-2 gap-2">
+                {themes.map((theme) => (
+                    <button
+                        key={theme.name}
+                        onClick={() => setTheme(theme.name)}
+                        className={cn(
+                            "group relative flex items-center justify-center rounded-md p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                            selectedTheme === theme.name && "ring-2 ring-ring ring-offset-2"
+                        )}
+                        style={{
+                            backgroundColor: `hsl(${theme.colors.background})`,
+                            color: `hsl(${theme.colors.foreground})`,
+                        }}
+                    >
+                         <div
+                            className="absolute inset-0 rounded-md border-2"
+                            style={{
+                                borderColor: selectedTheme === theme.name ? `hsl(${theme.colors.ring})` : 'transparent',
+                            }}
+                        />
+                        <span>{theme.label}</span>
+                    </button>
+                ))}
+            </div>
         </div>
         <div className="space-y-2 rounded-lg border p-3">
             <Label htmlFor="background-upload">Upload Background</Label>
