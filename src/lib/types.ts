@@ -21,3 +21,6 @@ export type Theme = {
     ring: string;
   };
 };
+
+export type ClockType = "digital" | "analog";
+export type DialShape = "round" | "square" | "oval";
