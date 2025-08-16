@@ -20,7 +20,7 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
     
     if (birthdaysOnDay.length > 0) {
       // Prioritize the birthday entry that has a custom message.
-      const birthdayToCelebrate = birthdaysOnDay.find(b => b.message) || birthdaysOnDay[0];
+      const birthdayToCelebrate = birthdaysOnDay.find(b => !!b.message) || birthdaysOnDay[0];
       onBirthdayClick(birthdayToCelebrate);
     }
   };
