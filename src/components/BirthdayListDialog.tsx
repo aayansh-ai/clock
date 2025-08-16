@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { birthdays } from '@/lib/types';
 import { Gift, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -37,33 +38,35 @@ export default function BirthdayListDialog({ open, onOpenChange }: BirthdayListD
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Gift className="h-6 w-6 text-destructive" />
+            <Gift className="h-6 w-6 text-primary" />
             Family Birthdays
           </DialogTitle>
           <DialogDescription>
             Here are all the upcoming special days to remember.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          {upcomingBirthdays.map((b) => (
-            <div key={b.name} className="flex items-center justify-between rounded-lg border p-3">
-              <div>
-                <p className="font-semibold text-primary">{b.name}</p>
-                <p className="text-sm text-muted-foreground flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  {format(b.date, 'MMMM do')}
-                </p>
+        <ScrollArea className="max-h-[60vh] pr-4">
+          <div className="space-y-4 py-4">
+            {upcomingBirthdays.map((b) => (
+              <div key={b.name} className="flex items-center justify-between rounded-lg border p-4 shadow-sm transition-all hover:shadow-md">
+                <div className="flex flex-col">
+                  <p className="font-semibold text-foreground">{b.name}</p>
+                  <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4" />
+                    {format(b.date, 'MMMM do')}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-lg text-primary">{b.daysUntil}</p>
+                  <p className="text-xs text-muted-foreground">days away</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="font-bold text-lg text-foreground">{b.daysUntil}</p>
-                <p className="text-xs text-muted-foreground">days away</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
