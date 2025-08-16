@@ -33,26 +33,26 @@ interface SettingsPanelProps {
 const predefinedBackgrounds = [
   {
     name: "Cosmic",
-    url: "https://placehold.co/1920x1080.png",
-    thumbnail: "https://placehold.co/320x180.png",
+    url: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=320&auto=format&fit=crop",
     hint: "galaxy stars",
   },
   {
     name: "Forest",
-    url: "https://placehold.co/1920x1080.png",
-    thumbnail: "https://placehold.co/320x180.png",
+    url: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=320&auto=format&fit=crop",
     hint: "forest trees",
   },
   {
     name: "Beach",
-    url: "https://placehold.co/1920x1080.png",
-    thumbnail: "https://placehold.co/320x180.png",
+    url: "https://images.unsplash.com/photo-1507525428034-b723a996f3d1?q=80&w=2070&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1507525428034-b723a996f3d1?q=80&w=320&auto=format&fit=crop",
     hint: "beach ocean",
   },
   {
     name: "Mountain",
-    url: "https://placehold.co/1920x1080.png",
-    thumbnail: "https://placehold.co/320x180.png",
+    url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop",
+    thumbnail: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=320&auto=format&fit=crop",
     hint: "mountain snow",
   },
 ];
@@ -71,6 +71,20 @@ export default function SettingsPanel({
   customBackground,
   setCustomBackground,
 }: SettingsPanelProps) {
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (typeof e.target?.result === "string") {
+          setCustomBackground(e.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="space-y-8 p-1 pt-4">
       <div className="space-y-4 px-4">
@@ -98,25 +112,27 @@ export default function SettingsPanel({
       <div className="space-y-4 px-4">
         <h3 className="font-semibold text-foreground">Appearance</h3>
         <div className="space-y-2 rounded-lg border p-3">
+            <Label htmlFor="background-upload">Upload Background</Label>
+            <Input id="background-upload" type="file" accept="image/*" onChange={handleFileUpload} className="text-sm" />
+        </div>
+        <div className="space-y-2 rounded-lg border p-3">
           <Label htmlFor="custom-background">Custom Background URL</Label>
           <div className="flex gap-2">
             <Input
               id="custom-background"
               type="url"
               placeholder="https://images.unsplash.com/..."
-              value={customBackground}
+              value={customBackground.startsWith('data:') ? '' : customBackground}
               onChange={(e) => setCustomBackground(e.target.value)}
               className="text-sm"
             />
-            {customBackground && (
-              <Button
+             <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setCustomBackground("")}
               >
                 Clear
               </Button>
-            )}
           </div>
         </div>
         <div className="space-y-2 rounded-lg border p-3">
