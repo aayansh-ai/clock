@@ -85,6 +85,12 @@ export default function SettingsPanel({
     }
   };
 
+  const isNightMode = selectedTheme === "dark";
+
+  const toggleNightMode = () => {
+    setTheme(isNightMode ? "default" : "dark");
+  };
+
   return (
     <div className="space-y-8 p-1 pt-4">
       <div className="space-y-4 px-4">
@@ -111,6 +117,14 @@ export default function SettingsPanel({
 
       <div className="space-y-4 px-4">
         <h3 className="font-semibold text-foreground">Appearance</h3>
+         <div className="flex items-center justify-between rounded-lg border p-3">
+          <Label htmlFor="night-mode">Night Mode</Label>
+          <Switch
+            id="night-mode"
+            checked={isNightMode}
+            onCheckedChange={toggleNightMode}
+          />
+        </div>
         <div className="space-y-2 rounded-lg border p-3">
             <Label htmlFor="background-upload">Upload Background</Label>
             <Input id="background-upload" type="file" accept="image/*" onChange={handleFileUpload} className="text-sm" />
@@ -160,47 +174,6 @@ export default function SettingsPanel({
             ))}
           </div>
         </div>
-        <Label>Theme</Label>
-        <div className="grid grid-cols-2 gap-2">
-          {themes.map((theme) => (
-            <button
-              key={theme.name}
-              onClick={() => setTheme(theme.name)}
-              className="group rounded-md border-2 p-2 text-left transition-all focus:outline-none focus:ring-2 focus:ring-ring"
-              style={{
-                borderColor:
-                  theme.name === selectedTheme
-                    ? `hsl(${theme.colors.primary})`
-                    : "hsl(var(--border))",
-              }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">{theme.label}</span>
-                {theme.name === selectedTheme && (
-                  <Check className="h-4 w-4 text-primary" />
-                )}
-              </div>
-              <div className="mt-2 flex gap-1 rounded-sm border p-1">
-                <div
-                  className="h-5 w-full rounded-sm"
-                  style={{ backgroundColor: `hsl(${theme.colors.background})` }}
-                />
-                <div
-                  className="h-5 w-full rounded-sm"
-                  style={{ backgroundColor: `hsl(${theme.colors.foreground})` }}
-                />
-                <div
-                  className="h-5 w-full rounded-sm"
-                  style={{ backgroundColor: `hsl(${theme.colors.primary})` }}
-                />
-                <div
-                  className="h-5 w-full rounded-sm"
-                  style={{ backgroundColor: `hsl(${theme.colors.accent})` }}
-                />
-              </div>
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="space-y-4 px-4">
@@ -235,3 +208,5 @@ export default function SettingsPanel({
     </div>
   );
 }
+
+    
