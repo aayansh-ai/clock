@@ -6,13 +6,11 @@ import Link from 'next/link';
 import YearlyCalendar from '@/components/yearly-calendar';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
-import { useTheme } from '@/hooks/use-theme';
 import BirthdayCelebration from '@/components/BirthdayCelebration';
 
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
-  const { theme } = useTheme();
   const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
 
   const handleBirthdayClick = () => {
@@ -22,14 +20,14 @@ export default function CalendarPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {showBirthdayCelebration && <BirthdayCelebration onComplete={() => setShowBirthdayCelebration(false)} />}
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-4 py-2 backdrop-blur-sm">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-4 py-2 backdrop-blur-sm sm:px-6">
         <Button asChild variant="ghost" size="icon">
           <Link href="/">
             <Home className="h-5 w-5" />
             <span className="sr-only">Home</span>
           </Link>
         </Button>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Button
             variant="outline"
             size="icon"
@@ -37,7 +35,7 @@ export default function CalendarPage() {
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <h1 className="text-xl font-bold">{year}</h1>
+          <h1 className="text-xl font-bold sm:text-2xl">{year}</h1>
           <Button
             variant="outline"
             size="icon"
@@ -46,9 +44,9 @@ export default function CalendarPage() {
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="w-8" /> 
+        <div className="w-9" /> 
       </header>
-      <main className="container mx-auto p-4">
+      <main className="mx-auto w-full max-w-7xl p-4 sm:p-6">
         <YearlyCalendar year={year} onBirthdayClick={handleBirthdayClick} />
       </main>
     </div>
