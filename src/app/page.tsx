@@ -105,6 +105,8 @@ export default function Home() {
 
   const getCelebrationMessage = () => {
     if (birthdayPerson === 'Aayansh') return "Happy Birthday Aayansh!!!";
+    if (birthdayPerson === 'Papa') return "Happy Birthday Papa";
+    if (birthdayPerson === 'Mummy') return "Happy Birthday Mummy";
     if (birthdayPerson) return `Happy Birthday ${birthdayPerson}`;
     return "";
   }
@@ -144,10 +146,7 @@ export default function Home() {
       </div>
 
 
-      <div className="absolute bottom-4 left-4 z-20" />
-
-
-      <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
+      <div className="absolute top-1/2 right-4 z-20 flex -translate-y-1/2 flex-col items-center gap-2">
          <Button variant="ghost" size="icon" onClick={() => setClockType(clockType === 'digital' ? 'analog' : 'digital')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Toggle clock type">
           {clockType === 'digital' ? <TabletSmartphone className="h-6 w-6" /> : <Clock4 className="h-6 w-6" />}
         </Button>
