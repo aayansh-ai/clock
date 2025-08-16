@@ -6,7 +6,7 @@ import { Gift } from 'lucide-react';
 import { birthdays, type Birthday } from '@/lib/types';
 
 interface MonthlyCalendarProps {
-  onBirthdayClick: (name: string) => void;
+  onBirthdayClick: (birthday: Birthday) => void;
 }
 
 export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProps) {
@@ -15,9 +15,12 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
   const birthdayDates = birthdays.map(b => new Date(today.getFullYear(), b.month, b.day));
 
   const handleDayClick = (day: Date) => {
-    const birthday = birthdays.find(b => b.month === day.getMonth() && b.day === day.getDate());
-    if (birthday) {
-      onBirthdayClick(birthday.name);
+    // Find all birthdays on the clicked day
+    const birthdaysOnDay = birthdays.filter(b => b.month === day.getMonth() && b.day === day.getDate());
+    // For simplicity, we trigger the celebration for the first person found on that day.
+    // The message logic will handle shared birthdays.
+    if (birthdaysOnDay.length > 0) {
+      onBirthdayClick(birthdaysOnDay[0]);
     }
   };
 

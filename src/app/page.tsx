@@ -10,7 +10,8 @@ import AnalogClock from "@/components/analog-clock";
 import MonthlyCalendar from "@/components/monthly-calendar";
 import RetroClock from "@/components/retro-clock";
 import SettingsPanel from "@/components/settings-panel";
-import type { TimeFormat, ClockType, DialShape } from "@/lib/types";
+import type { TimeFormat, ClockType, DialShape, Birthday } from "@/lib/types";
+import { birthdays } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -29,7 +30,7 @@ export default function Home() {
   const [customBackground, setCustomBackground] = useState("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop");
   const [clockType, setClockType] = useState<ClockType>("digital");
   const [dialShape, setDialShape] = useState<DialShape>("round");
-  const [birthdayPerson, setBirthdayPerson] = useState<string | null>(null);
+  const [birthdayPerson, setBirthdayPerson] = useState<Birthday | null>(null);
   const [showBirthdayList, setShowBirthdayList] = useState(false);
 
 
@@ -100,16 +101,15 @@ export default function Home() {
     );
   }
 
-  const handleBirthdayClick = (name: string) => {
-    setBirthdayPerson(name);
+  const handleBirthdayClick = (birthday: Birthday) => {
+    setBirthdayPerson(birthday);
   };
 
   const getCelebrationMessage = () => {
-    if (birthdayPerson === 'Aayansh') return "Happy Birthday Aayansh!!!";
-    if (birthdayPerson === 'Papa') return "Happy Birthday Papa";
-    if (birthdayPerson === 'Mummy') return "Happy Birthday Mummy";
-    if (birthdayPerson) return `Happy Birthday ${birthdayPerson}`;
-    return "";
+    if (!birthdayPerson) return "";
+    if (birthdayPerson.message) return birthdayPerson.message;
+    if (birthdayPerson.name === 'Aayansh') return "Happy Birthday Aayansh!!!";
+    return `Happy Birthday ${birthdayPerson.name}`;
   }
 
   return (

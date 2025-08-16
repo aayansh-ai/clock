@@ -3,11 +3,11 @@
 
 import { Calendar } from '@/components/ui/calendar';
 import { Gift } from 'lucide-react';
-import { birthdays } from '@/lib/types';
+import { birthdays, type Birthday } from '@/lib/types';
 
 interface YearlyCalendarProps {
   year: number;
-  onBirthdayClick: (name: string) => void;
+  onBirthdayClick: (birthday: Birthday) => void;
 }
 
 export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendarProps) {
@@ -16,9 +16,9 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
   const birthdayDates = birthdays.map(b => new Date(year, b.month, b.day));
 
   const handleDayClick = (day: Date) => {
-    const birthday = birthdays.find(b => b.month === day.getMonth() && b.day === day.getDate());
-    if (birthday) {
-      onBirthdayClick(birthday.name);
+    const birthdaysOnDay = birthdays.filter(b => b.month === day.getMonth() && b.day === day.getDate());
+    if (birthdaysOnDay.length > 0) {
+      onBirthdayClick(birthdaysOnDay[0]);
     }
   };
 

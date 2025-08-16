@@ -7,20 +7,22 @@ import YearlyCalendar from '@/components/yearly-calendar';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import BirthdayCelebration from '@/components/BirthdayCelebration';
+import type { Birthday } from '@/lib/types';
 
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
-  const [birthdayPerson, setBirthdayPerson] = useState<string | null>(null);
+  const [birthdayPerson, setBirthdayPerson] = useState<Birthday | null>(null);
 
-  const handleBirthdayClick = (name: string) => {
-    setBirthdayPerson(name);
+  const handleBirthdayClick = (birthday: Birthday) => {
+    setBirthdayPerson(birthday);
   };
   
   const getCelebrationMessage = () => {
-    if (birthdayPerson === 'Aayansh') return "Happy Birthday Aayansh!!!";
-    if (birthdayPerson) return `Happy Birthday ${birthdayPerson}`;
-    return "";
+    if (!birthdayPerson) return "";
+    if (birthdayPerson.message) return birthdayPerson.message;
+    if (birthdayPerson.name === 'Aayansh') return "Happy Birthday Aayansh!!!";
+    return `Happy Birthday ${birthdayPerson.name}`;
   }
 
   return (
