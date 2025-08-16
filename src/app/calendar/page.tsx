@@ -7,14 +7,21 @@ import YearlyCalendar from '@/components/yearly-calendar';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
+import BirthdayCelebration from '@/components/BirthdayCelebration';
 
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
   const { theme } = useTheme();
+  const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
+
+  const handleBirthdayClick = () => {
+    setShowBirthdayCelebration(true);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {showBirthdayCelebration && <BirthdayCelebration onComplete={() => setShowBirthdayCelebration(false)} />}
       <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-4 py-2 backdrop-blur-sm">
         <Button asChild variant="ghost" size="icon">
           <Link href="/">
@@ -42,7 +49,7 @@ export default function CalendarPage() {
         <div className="w-8" /> 
       </header>
       <main className="container mx-auto p-4">
-        <YearlyCalendar year={year} />
+        <YearlyCalendar year={year} onBirthdayClick={handleBirthdayClick} />
       </main>
     </div>
   );

@@ -15,6 +15,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import BirthdayCelebration from "@/components/BirthdayCelebration";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
@@ -26,6 +27,7 @@ export default function Home() {
   const [customBackground, setCustomBackground] = useState("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop");
   const [clockType, setClockType] = useState<ClockType>("digital");
   const [dialShape, setDialShape] = useState<DialShape>("round");
+  const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
 
 
   const { isSupported } = useWakeLock(keepScreenOn);
@@ -95,14 +97,19 @@ export default function Home() {
     );
   }
 
+  const handleBirthdayClick = () => {
+    setShowBirthdayCelebration(true);
+  };
+
   return (
     <main
-      className="group relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-background text-foreground transition-all duration-300"
+      className="group relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center text-foreground transition-all duration-300"
       style={{
         backgroundImage: customBackground ? `url(${customBackground})` : "none",
         backgroundColor: `hsl(var(--background))`,
       }}
     >
+      {showBirthdayCelebration && <BirthdayCelebration onComplete={() => setShowBirthdayCelebration(false)} />}
       <div
         className={cn("absolute inset-0 backdrop-blur-sm", {
           "bg-black/50": !!customBackground,
@@ -118,7 +125,7 @@ export default function Home() {
           "transition-all duration-500 ease-in-out",
           showDate ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         )}>
-          {showDate && <MonthlyCalendar />}
+          {showDate && <MonthlyCalendar onBirthdayClick={handleBirthdayClick} />}
         </div>
       </div>
 
