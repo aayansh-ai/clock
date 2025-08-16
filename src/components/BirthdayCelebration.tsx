@@ -7,12 +7,9 @@ export default function BirthdayCelebration({ onComplete }: { onComplete: () => 
   const [confetti, setConfetti] = useState<
     { id: number; x: number; y: number; rotation: number; speed: number; opacity: number; color: string }[]
   >([]);
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    const celebrationAudio = new Audio('/sounds/celebration.mp3');
-    setAudio(celebrationAudio);
-    celebrationAudio.play();
+    // Intentionally removed audio playback as the file does not exist in the project.
 
     const newConfetti = Array.from({ length: 200 }).map((_, i) => ({
       id: i,
@@ -31,7 +28,6 @@ export default function BirthdayCelebration({ onComplete }: { onComplete: () => 
 
     return () => {
       clearTimeout(animationTimeout);
-      celebrationAudio.pause();
     };
   }, [onComplete]);
 
