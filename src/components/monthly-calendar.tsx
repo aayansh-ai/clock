@@ -17,10 +17,11 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
   const handleDayClick = (day: Date) => {
     // Find all birthdays on the clicked day
     const birthdaysOnDay = birthdays.filter(b => b.month === day.getMonth() && b.day === day.getDate());
-    // For simplicity, we trigger the celebration for the first person found on that day.
-    // The message logic will handle shared birthdays.
+    
     if (birthdaysOnDay.length > 0) {
-      onBirthdayClick(birthdaysOnDay[0]);
+      // Prioritize the birthday entry that has a custom message.
+      const birthdayToCelebrate = birthdaysOnDay.find(b => b.message) || birthdaysOnDay[0];
+      onBirthdayClick(birthdayToCelebrate);
     }
   };
 

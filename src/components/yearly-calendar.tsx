@@ -18,7 +18,9 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
   const handleDayClick = (day: Date) => {
     const birthdaysOnDay = birthdays.filter(b => b.month === day.getMonth() && b.day === day.getDate());
     if (birthdaysOnDay.length > 0) {
-      onBirthdayClick(birthdaysOnDay[0]);
+      // Prioritize the birthday entry that has a custom message.
+      const birthdayToCelebrate = birthdaysOnDay.find(b => b.message) || birthdaysOnDay[0];
+      onBirthdayClick(birthdayToCelebrate);
     }
   };
 
