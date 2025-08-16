@@ -16,6 +16,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
@@ -102,23 +103,25 @@ export default function Home() {
               <Settings className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className="flex flex-col">
             <SheetHeader>
               <SheetTitle>Settings</SheetTitle>
             </SheetHeader>
-            <SettingsPanel
-              timeFormat={timeFormat}
-              setTimeFormat={setTimeFormat}
-              showDate={showDate}
-              setShowDate={setShowDate}
-              selectedTheme={theme}
-              setTheme={setTheme}
-              keepScreenOn={keepScreenOn}
-              setKeepScreenOn={setKeepScreenOn}
-              isWakeLockSupported={isSupported}
-              customBackground={customBackground}
-              setCustomBackground={setCustomBackground}
-            />
+            <ScrollArea className="flex-grow">
+              <SettingsPanel
+                timeFormat={timeFormat}
+                setTimeFormat={setTimeFormat}
+                showDate={showDate}
+                setShowDate={setShowDate}
+                selectedTheme={theme}
+                setTheme={setTheme}
+                keepScreenOn={keepScreenOn}
+                setKeepScreenOn={setKeepScreenOn}
+                isWakeLockSupported={isSupported}
+                customBackground={customBackground}
+                setCustomBackground={setCustomBackground}
+              />
+            </ScrollArea>
           </SheetContent>
         </Sheet>
       </div>
