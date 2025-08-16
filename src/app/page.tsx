@@ -23,7 +23,7 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme, isThemeLoaded } = useTheme();
 
-  const [timeFormat, setTimeFormat] = useState<TimeFormat>("12h");
+  const [timeFormat, setTimeFormat] = useState<TimeFormat>("24h");
   const [showDate, setShowDate] = useState(true);
   const [keepScreenOn, setKeepScreenOn] = useState(false);
   const [customBackground, setCustomBackground] = useState("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop");
@@ -134,7 +134,7 @@ export default function Home() {
       />
       
       {clockType === 'retro' ? (
-        <RetroClock />
+        <RetroClock timeFormat={timeFormat} />
       ) : (
         <div className={cn(
             "relative z-10 flex items-center justify-center gap-8",
@@ -178,7 +178,7 @@ export default function Home() {
             </Button>
           </>
         )}
-         {clockType === 'digital' && (
+         {(clockType === 'digital' || clockType === 'retro') && (
             <Button variant="ghost" size="icon" onClick={() => setTimeFormat(timeFormat === '12h' ? '24h' : '12h')} className="h-12 w-12 rounded-full hover:bg-accent/80" aria-label="Toggle time format">
                 <span className="text-lg font-bold">{timeFormat === '12h' ? '12h' : '24h'}</span>
             </Button>
