@@ -3,20 +3,27 @@
 
 import { Calendar } from '@/components/ui/calendar';
 import { Gift } from 'lucide-react';
+import { birthdays, type Birthday } from '@/lib/types';
 
 interface MonthlyCalendarProps {
-  onBirthdayClick: () => void;
+  onBirthdayClick: (name: string) => void;
 }
 
 export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProps) {
   const today = new Date();
-  const birthday = new Date(today.getFullYear(), 8, 18); // September 18
+  
+  const birthdayDates = birthdays.map(b => new Date(today.getFullYear(), b.month, b.day));
 
   const handleDayClick = (day: Date) => {
-    if (day.getMonth() === 8 && day.getDate() === 18) {
-      onBirthdayClick();
+    const birthday = birthdays.find(b => b.month === day.getMonth() && b.day === day.getDate());
+    if (birthday) {
+      onBirthdayClick(birthday.name);
     }
   };
+
+  const isBirthday = (date: Date) => {
+    return birthdays.some(b => b.month === date.getMonth() && b.day === date.getDate());
+  }
 
   return (
     <div className="rounded-lg border bg-background/50 p-0 backdrop-blur-sm">
@@ -36,7 +43,7 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
         }}
         components={{
           DayContent: ({ date }) => {
-            if (date.getMonth() === 8 && date.getDate() === 18) {
+            if (isBirthday(date)) {
               return (
                 <div className="relative flex h-full w-full items-center justify-center">
                   <span>{date.getDate()}</span>
@@ -48,7 +55,7 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
           },
         }}
         modifiers={{
-          birthday: birthday,
+          birthday: birthdayDates,
         }}
         modifiersClassNames={{
           birthday: 'border-2 border-destructive rounded-full',

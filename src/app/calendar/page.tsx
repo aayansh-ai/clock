@@ -11,15 +11,26 @@ import BirthdayCelebration from '@/components/BirthdayCelebration';
 
 export default function CalendarPage() {
   const [year, setYear] = useState(new Date().getFullYear());
-  const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
+  const [birthdayPerson, setBirthdayPerson] = useState<string | null>(null);
 
-  const handleBirthdayClick = () => {
-    setShowBirthdayCelebration(true);
+  const handleBirthdayClick = (name: string) => {
+    setBirthdayPerson(name);
   };
+  
+  const getCelebrationMessage = () => {
+    if (birthdayPerson === 'Aayansh') return "Happy Birthday Aayansh!!!";
+    if (birthdayPerson) return `Happy Birthday ${birthdayPerson}`;
+    return "";
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {showBirthdayCelebration && <BirthdayCelebration onComplete={() => setShowBirthdayCelebration(false)} />}
+      {birthdayPerson && (
+        <BirthdayCelebration 
+          message={getCelebrationMessage()} 
+          onComplete={() => setBirthdayPerson(null)} 
+        />
+      )}
       <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-background/80 px-4 py-2 backdrop-blur-sm sm:px-6">
         <Button asChild variant="ghost" size="icon">
           <Link href="/">

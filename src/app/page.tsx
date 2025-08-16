@@ -13,9 +13,10 @@ import type { TimeFormat, ClockType, DialShape } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon } from "lucide-react";
+import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
 import BirthdayCelebration from "@/components/BirthdayCelebration";
+import BirthdayListDialog from "@/components/BirthdayListDialog";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,7 +28,8 @@ export default function Home() {
   const [customBackground, setCustomBackground] = useState("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop");
   const [clockType, setClockType] = useState<ClockType>("digital");
   const [dialShape, setDialShape] = useState<DialShape>("round");
-  const [showBirthdayCelebration, setShowBirthdayCelebration] = useState(false);
+  const [birthdayPerson, setBirthdayPerson] = useState<string | null>(null);
+  const [showBirthdayList, setShowBirthdayList] = useState(false);
 
 
   const { isSupported } = useWakeLock(keepScreenOn);
@@ -97,9 +99,15 @@ export default function Home() {
     );
   }
 
-  const handleBirthdayClick = () => {
-    setShowBirthdayCelebration(true);
+  const handleBirthdayClick = (name: string) => {
+    setBirthdayPerson(name);
   };
+
+  const getCelebrationMessage = () => {
+    if (birthdayPerson === 'Aayansh') return "Happy Birthday Aayansh!!!";
+    if (birthdayPerson) return `Happy Birthday ${birthdayPerson}`;
+    return "";
+  }
 
   return (
     <main
@@ -109,7 +117,13 @@ export default function Home() {
         backgroundColor: `hsl(var(--background))`,
       }}
     >
-      {showBirthdayCelebration && <BirthdayCelebration onComplete={() => setShowBirthdayCelebration(false)} />}
+      {birthdayPerson && (
+        <BirthdayCelebration 
+          message={getCelebrationMessage()} 
+          onComplete={() => setBirthdayPerson(null)} 
+        />
+      )}
+       <BirthdayListDialog open={showBirthdayList} onOpenChange={setShowBirthdayList} />
       <div
         className={cn("absolute inset-0 backdrop-blur-sm", {
           "bg-black/50": !!customBackground,
@@ -156,6 +170,9 @@ export default function Home() {
           <Link href="/calendar">
             <CalendarIcon className="h-6 w-6" />
           </Link>
+        </Button>
+        <Button variant="ghost" size="icon" onClick={() => setShowBirthdayList(true)} className="rounded-full hover:bg-accent/80" aria-label="Show birthdays">
+            <Gift className="h-6 w-6" />
         </Button>
       </div>
 

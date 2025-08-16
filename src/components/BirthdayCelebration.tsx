@@ -13,9 +13,14 @@ interface Particle {
   emoji: string;
 }
 
+interface BirthdayCelebrationProps {
+  message: string;
+  onComplete: () => void;
+}
+
 const particleTypes = ['🎉', '🎊', '🎈', '🎁', '🎂', '✨', '💖', '🌟'];
 
-export default function BirthdayCelebration({ onComplete }: { onComplete: () => void }) {
+export default function BirthdayCelebration({ message, onComplete }: BirthdayCelebrationProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ export default function BirthdayCelebration({ onComplete }: { onComplete: () => 
                     animation: 'rainbow-text 3s ease-in-out infinite, pulse 1.5s infinite',
                 }}
             >
-            Happy Birthday Aayansh!!!
+            {message}
             </h1>
        </div>
       {particles.map((p) => (

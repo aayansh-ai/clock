@@ -24,3 +24,15 @@ export type Theme = {
 
 export type ClockType = "digital" | "analog";
 export type DialShape = "round" | "square" | "oval";
+
+export interface Birthday {
+  name: string;
+  month: number; // 0-11
+  day: number;
+}
+
+export const birthdays: Birthday[] = [
+  { name: 'Aayansh', month: 8, day: 18 }, // September 18
+  { name: 'Papa', month: 3, day: 2 },     // April 2
+  { name: 'Mummy', month: 9, day: 5 },  // October 5
+];

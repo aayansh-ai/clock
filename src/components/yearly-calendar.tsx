@@ -3,21 +3,28 @@
 
 import { Calendar } from '@/components/ui/calendar';
 import { Gift } from 'lucide-react';
+import { birthdays } from '@/lib/types';
 
 interface YearlyCalendarProps {
   year: number;
-  onBirthdayClick: () => void;
+  onBirthdayClick: (name: string) => void;
 }
 
 export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendarProps) {
   const months = Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
-  const birthday = new Date(year, 8, 18); // September 18
+  
+  const birthdayDates = birthdays.map(b => new Date(year, b.month, b.day));
 
   const handleDayClick = (day: Date) => {
-    if (day.getMonth() === 8 && day.getDate() === 18) {
-      onBirthdayClick();
+    const birthday = birthdays.find(b => b.month === day.getMonth() && b.day === day.getDate());
+    if (birthday) {
+      onBirthdayClick(birthday.name);
     }
   };
+
+  const isBirthday = (date: Date) => {
+    return birthdays.some(b => b.month === date.getMonth() && b.day === date.getDate());
+  }
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -49,19 +56,19 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
             showOutsideDays={false}
             components={{
               DayContent: ({ date }) => {
-                const isBirthday = date.getMonth() === 8 && date.getDate() === 18;
-                return (
-                  <div className="relative flex h-full w-full items-center justify-center">
-                    <span>{date.getDate()}</span>
-                    {isBirthday && (
+                if (isBirthday(date)) {
+                  return (
+                    <div className="relative flex h-full w-full items-center justify-center">
+                      <span>{date.getDate()}</span>
                       <Gift className="absolute bottom-1 right-1 h-3 w-3 text-destructive" />
-                    )}
-                  </div>
-                );
+                    </div>
+                  );
+                }
+                return <div>{date.getDate()}</div>;
               },
             }}
              modifiers={{
-              birthday: birthday,
+              birthday: birthdayDates,
             }}
             modifiersClassNames={{
               birthday: 'border-2 border-destructive rounded-full',
