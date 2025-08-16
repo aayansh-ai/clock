@@ -144,7 +144,7 @@ export default function Home() {
       </div>
 
 
-      <div className="absolute bottom-4 left-4 z-20 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="absolute bottom-4 left-4 z-20 flex gap-2">
         <Button variant="ghost" size="icon" onClick={() => setClockType(clockType === 'digital' ? 'analog' : 'digital')} className="rounded-full hover:bg-accent/80" aria-label="Toggle clock type">
           {clockType === 'digital' ? <TabletSmartphone className="h-6 w-6" /> : <Clock4 className="h-6 w-6" />}
         </Button>
