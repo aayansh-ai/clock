@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -23,6 +24,7 @@ export default function Home() {
   const [timeFormat, setTimeFormat] = useState<TimeFormat>("12h");
   const [showDate, setShowDate] = useState(true);
   const [keepScreenOn, setKeepScreenOn] = useState(false);
+  const [customBackground, setCustomBackground] = useState("");
 
   const { isSupported } = useWakeLock(keepScreenOn);
 
@@ -32,10 +34,12 @@ export default function Home() {
     ) as TimeFormat | null;
     const storedShowDate = localStorage.getItem("chrono-showDate");
     const storedKeepScreenOn = localStorage.getItem("chrono-keepScreenOn");
+    const storedCustomBackground = localStorage.getItem("chrono-customBackground");
 
     if (storedFormat) setTimeFormat(storedFormat);
     if (storedShowDate) setShowDate(JSON.parse(storedShowDate));
     if (storedKeepScreenOn) setKeepScreenOn(JSON.parse(storedKeepScreenOn));
+    if (storedCustomBackground) setCustomBackground(storedCustomBackground);
 
     setIsMounted(true);
   }, []);
@@ -58,6 +62,12 @@ export default function Home() {
     }
   }, [keepScreenOn, isMounted]);
 
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem("chrono-customBackground", customBackground);
+    }
+  }, [customBackground, isMounted]);
+
   if (!isMounted || !isThemeLoaded) {
     return (
       <div className="flex min-h-screen w-full items-center justify-center bg-background">
@@ -67,10 +77,20 @@ export default function Home() {
   }
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center bg-background text-foreground transition-colors duration-300">
-      <Clock timeFormat={timeFormat} showDate={showDate} />
+    <main
+      className="relative flex min-h-screen flex-col items-center justify-center bg-cover bg-center bg-background text-foreground transition-colors duration-300"
+      style={{
+        backgroundImage: customBackground ? `url(${customBackground})` : "none",
+      }}
+    >
+      {customBackground && (
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+      )}
+      <div className="relative z-10">
+        <Clock timeFormat={timeFormat} showDate={showDate} />
+      </div>
 
-      <div className="absolute top-4 right-4 md:top-8 md:right-8">
+      <div className="absolute top-4 right-4 z-20 md:top-8 md:right-8">
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -96,15 +116,16 @@ export default function Home() {
               keepScreenOn={keepScreenOn}
               setKeepScreenOn={setKeepScreenOn}
               isWakeLockSupported={isSupported}
+              customBackground={customBackground}
+              setCustomBackground={setCustomBackground}
             />
           </SheetContent>
         </Sheet>
       </div>
 
-      <footer className="absolute bottom-4 px-4 text-center text-sm text-muted-foreground">
+      <footer className="absolute bottom-4 z-10 px-4 text-center text-sm text-muted-foreground">
         <p>
-          <strong>Coming Soon:</strong> Alarms, Stopwatch, World Clocks, and
-          Custom Backgrounds.
+          <strong>Coming Soon:</strong> Alarms, Stopwatch, and World Clocks.
         </p>
       </footer>
     </main>

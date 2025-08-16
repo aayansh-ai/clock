@@ -1,7 +1,10 @@
+
 "use client";
 
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { themes } from "@/lib/themes";
 import type { TimeFormat } from "@/lib/types";
 import { Check, Info } from "lucide-react";
@@ -22,6 +25,8 @@ interface SettingsPanelProps {
   keepScreenOn: boolean;
   setKeepScreenOn: (keepOn: boolean) => void;
   isWakeLockSupported: boolean;
+  customBackground: string;
+  setCustomBackground: (url: string) => void;
 }
 
 export default function SettingsPanel({
@@ -34,6 +39,8 @@ export default function SettingsPanel({
   keepScreenOn,
   setKeepScreenOn,
   isWakeLockSupported,
+  customBackground,
+  setCustomBackground,
 }: SettingsPanelProps) {
   return (
     <div className="space-y-8 p-1 pt-4">
@@ -61,6 +68,28 @@ export default function SettingsPanel({
 
       <div className="space-y-4 px-4">
         <h3 className="font-semibold text-foreground">Appearance</h3>
+        <div className="space-y-2 rounded-lg border p-3">
+          <Label htmlFor="custom-background">Custom Background URL</Label>
+          <div className="flex gap-2">
+            <Input
+              id="custom-background"
+              type="url"
+              placeholder="https://images.unsplash.com/..."
+              value={customBackground}
+              onChange={(e) => setCustomBackground(e.target.value)}
+              className="text-sm"
+            />
+            {customBackground && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCustomBackground("")}
+              >
+                Clear
+              </Button>
+            )}
+          </div>
+        </div>
         <Label>Theme</Label>
         <div className="grid grid-cols-2 gap-2">
           {themes.map((theme) => (
