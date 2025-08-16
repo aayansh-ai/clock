@@ -46,7 +46,7 @@ export default function CalendarPage() {
         </div>
         <div className="w-9" /> 
       </header>
-      <main className="mx-auto w-full max-w-7xl p-4 sm:p-6">
+      <main className="mx-auto w-[75vw] p-4 sm:p-6">
         <YearlyCalendar year={year} onBirthdayClick={handleBirthdayClick} />
       </main>
     </div>
