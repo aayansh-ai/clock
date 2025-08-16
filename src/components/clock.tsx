@@ -51,7 +51,7 @@ export default function Clock({ timeFormat, showDate }: ClockProps) {
         )}
       >
         {showDate && (
-          <p className="font-body mt-2 text-xl text-muted-foreground md:text-2xl" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
+          <p className="font-body mt-2 text-xl text-foreground/80 md:text-2xl" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
             {formattedDate}
           </p>
         )}

@@ -2,16 +2,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useTheme } from "@/hooks/use-theme";
 import { useWakeLock } from "@/hooks/use-wake-lock";
 import Clock from "@/components/clock";
 import AnalogClock from "@/components/analog-clock";
+import MonthlyCalendar from "@/components/monthly-calendar";
 import SettingsPanel from "@/components/settings-panel";
 import type { TimeFormat, ClockType, DialShape } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings } from "lucide-react";
+import { Loader2, Moon, Sun, Clock4, TabletSmartphone, Square, Circle, Ellipsis, Settings, CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
@@ -106,12 +108,18 @@ export default function Home() {
           "bg-black/50": !!customBackground,
         })}
       />
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col items-center gap-8">
         {clockType === 'digital' ? (
           <Clock timeFormat={timeFormat} showDate={showDate} />
         ) : (
           <AnalogClock shape={dialShape} />
         )}
+        <div className={cn(
+          "transition-all duration-500 ease-in-out",
+          showDate ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        )}>
+          {showDate && <MonthlyCalendar />}
+        </div>
       </div>
 
 
@@ -137,6 +145,11 @@ export default function Home() {
                 <span className="text-lg font-bold">{timeFormat === '12h' ? '12h' : '24h'}</span>
             </Button>
         )}
+        <Button asChild variant="ghost" size="icon" className="rounded-full hover:bg-accent/80" aria-label="Yearly Calendar">
+          <Link href="/calendar">
+            <CalendarIcon className="h-6 w-6" />
+          </Link>
+        </Button>
       </div>
 
 
