@@ -99,9 +99,12 @@ export default function Home() {
         backgroundImage: customBackground ? `url(${customBackground})` : "none",
       }}
     >
-      {customBackground && (
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-      )}
+      <div
+        className={cn("absolute inset-0 bg-background/50 backdrop-blur-sm", {
+          "bg-black/50": !!customBackground,
+          "bg-transparent backdrop-blur-none": !customBackground,
+        })}
+      />
       <div className="relative z-10">
         {clockType === 'digital' ? (
           <Clock timeFormat={timeFormat} showDate={showDate} />

@@ -40,7 +40,7 @@ export default function Clock({ timeFormat, showDate }: ClockProps) {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center text-center text-white">
+    <div className="flex flex-col items-center justify-center text-center text-foreground">
       <h1 className="font-headline text-7xl font-black tracking-tighter sm:text-8xl md:text-9xl" style={{ textShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
         {formattedTime}
       </h1>
@@ -51,7 +51,7 @@ export default function Clock({ timeFormat, showDate }: ClockProps) {
         )}
       >
         {showDate && (
-          <p className="font-body mt-2 text-xl text-slate-200 md:text-2xl" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
+          <p className="font-body mt-2 text-xl text-muted-foreground md:text-2xl" style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
             {formattedDate}
           </p>
         )}
@@ -59,4 +59,3 @@ export default function Clock({ timeFormat, showDate }: ClockProps) {
     </div>
   );
 }
-
