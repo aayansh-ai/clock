@@ -4,6 +4,7 @@
 import { Calendar } from '@/components/ui/calendar';
 import { Gift } from 'lucide-react';
 import { birthdays, type Birthday } from '@/lib/types';
+import { isSameDay } from 'date-fns';
 
 interface YearlyCalendarProps {
   year: number;
@@ -12,6 +13,7 @@ interface YearlyCalendarProps {
 
 export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendarProps) {
   const months = Array.from({ length: 12 }, (_, i) => new Date(year, i, 1));
+  const today = new Date();
   
   const birthdayDates = birthdays.map(b => new Date(year, b.month, b.day));
 
@@ -39,15 +41,15 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
             month={month}
             mode="single"
             onDayClick={handleDayClick}
-            selected={new Date(year, month.getMonth(), new Date().getDate())} // Keep day consistent for visual selection
+            selected={today}
             classNames={{
               root: 'w-full',
               months: 'w-full',
               month: 'w-full space-y-4 p-3 pt-0',
               caption: 'hidden',
-              head_row: 'flex justify-center',
+              head_row: 'flex',
               head_cell: 'w-10 text-muted-foreground rounded-md font-normal text-sm',
-              row: 'flex w-full mt-2 justify-center',
+              row: 'flex w-full mt-2',
               cell: 'h-10 w-10 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20',
               day: 'h-10 w-10 p-0 font-normal aria-selected:opacity-100',
               day_selected:
@@ -70,8 +72,8 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
               },
             }}
              modifiers={{
-              birthday: birthdayDates,
-            }}
+              birthday: date => birthdayDates.some(bd => isSameDay(date, bd)),
+             }}
             modifiersClassNames={{
               birthday: 'border-2 border-destructive rounded-full',
             }}
