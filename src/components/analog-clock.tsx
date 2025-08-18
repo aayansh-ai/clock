@@ -42,7 +42,7 @@ export default function AnalogClock({ shape }: AnalogClockProps) {
   };
 
   return (
-    <div className={cn("relative border-4 border-primary bg-background/50 backdrop-blur-sm shadow-lg", shapeClasses[shape])} style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
+    <div className={cn("relative border-4 border-primary bg-background/70 backdrop-blur-sm shadow-lg", shapeClasses[shape])} style={{ textShadow: '0 2px 6px rgba(0,0,0,0.5)' }}>
       {numbers.map((hour) => (
         <div
           key={hour}

@@ -33,7 +33,7 @@ export default function YearlyCalendar({ year, onBirthdayClick }: YearlyCalendar
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {months.map((month, index) => (
-        <div key={index} className="rounded-xl border bg-card text-card-foreground shadow-sm">
+        <div key={index} className="rounded-xl border bg-card/80 text-card-foreground shadow-sm backdrop-blur-sm">
           <h3 className="p-3 text-center text-lg font-semibold">
             {month.toLocaleString('default', { month: 'long' })}
           </h3>

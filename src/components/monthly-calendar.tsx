@@ -30,7 +30,7 @@ export default function MonthlyCalendar({ onBirthdayClick }: MonthlyCalendarProp
   }
 
   return (
-    <div className="rounded-lg border bg-background/50 p-0 backdrop-blur-sm">
+    <div className="rounded-lg border bg-background/70 p-0 backdrop-blur-sm">
       <Calendar
         mode="single"
         selected={new Date()}
