@@ -3,6 +3,8 @@
 
 import { useState, useEffect } from 'react';
 import type { TimeFormat } from '@/lib/types';
+import { birthdays } from '@/lib/types';
+import { format } from 'date-fns';
 
 const SevenSegment = ({ digit, glow = false }: { digit: string, glow?: boolean }) => (
   <span 
@@ -57,15 +59,41 @@ export default function RetroClock({ timeFormat }: { timeFormat: TimeFormat }) {
   const dayOfWeek = time.getDay(); // 0 = Sunday, 1 = Monday, etc.
   const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
+  const getUpcomingBirthday = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const upcomingBirthdays = birthdays
+      .map(b => {
+        const birthdayDate = new Date(today.getFullYear(), b.month, b.day);
+        if (birthdayDate < today) {
+          birthdayDate.setFullYear(today.getFullYear() + 1);
+        }
+        return {
+          ...b,
+          date: birthdayDate,
+        };
+      })
+      .sort((a, b) => a.date.getTime() - b.date.getTime());
+    
+    return upcomingBirthdays[0];
+  };
+
+  const nextBirthday = getUpcomingBirthday();
+  const upcomingEventMessage = `Next is ${nextBirthday.name}'s Birthday on ${format(nextBirthday.date, 'MMMM do')}.`;
+
+
   return (
     <div className="z-10 relative flex w-full max-w-3xl flex-col items-center justify-center rounded-2xl border-8 border-gray-700 bg-black p-4 md:p-6 shadow-2xl">
       {/* Top decorative text */}
       <div className="absolute top-3 left-4 text-white">
-        <h2 className="font-bold text-lg">Ajanta</h2>
-        <p className="text-xs text-white/70">SINCE 1971</p>
+        <h2 className="font-bold text-lg">Aayansh</h2>
+        <p className="text-xs text-white/70">SINCE Etenity</p>
       </div>
       <div className="absolute top-4 right-4">
-        <h3 className="text-lg text-white/90" style={{ fontFamily: '"Brush Script MT", cursive' }}>Computer Century Calendar</h3>
+        <h3 className="text-sm text-white/90" style={{ fontFamily: '"Brush Script MT", cursive' }}>
+          {upcomingEventMessage}
+        </h3>
       </div>
       
       {/* Main content */}
@@ -130,7 +158,7 @@ export default function RetroClock({ timeFormat }: { timeFormat: TimeFormat }) {
             </div>
         </div>
       </div>
-       <p className="absolute bottom-2 right-4 text-xs text-white/70">OLC-104</p>
+       <p className="absolute bottom-2 right-4 text-xs text-white/70">My Watch</p>
     </div>
   );
 }

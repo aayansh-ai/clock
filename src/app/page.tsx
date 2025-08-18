@@ -27,7 +27,7 @@ export default function Home() {
   const [showDate, setShowDate] = useState(true);
   const [keepScreenOn, setKeepScreenOn] = useState(false);
   const [customBackground, setCustomBackground] = useState("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop");
-  const [clockType, setClockType] = useState<ClockType>("digital");
+  const [clockType, setClockType] = useState<ClockType>("retro");
   const [dialShape, setDialShape] = useState<DialShape>("round");
   const [birthdayPerson, setBirthdayPerson] = useState<Birthday | null>(null);
   const [showBirthdayList, setShowBirthdayList] = useState(false);
