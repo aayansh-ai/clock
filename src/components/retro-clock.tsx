@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import type { TimeFormat } from '@/lib/types';
 import { birthdays } from '@/lib/types';
-import { format } from 'date-fns';
+import { format, differenceInCalendarDays } from 'date-fns';
 
 const SevenSegment = ({ digit, glow = false }: { digit: string, glow?: boolean }) => (
   <span 
@@ -59,13 +59,13 @@ export default function RetroClock({ timeFormat }: { timeFormat: TimeFormat }) {
   const dayOfWeek = time.getDay(); // 0 = Sunday, 1 = Monday, etc.
   const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-  const getUpcomingBirthday = () => {
+  const getUpcomingBirthdayInfo = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const upcomingBirthdays = birthdays
       .map(b => {
-        const birthdayDate = new Date(today.getFullYear(), b.month, b.day);
+        let birthdayDate = new Date(today.getFullYear(), b.month, b.day);
         if (birthdayDate < today) {
           birthdayDate.setFullYear(today.getFullYear() + 1);
         }
@@ -75,12 +75,34 @@ export default function RetroClock({ timeFormat }: { timeFormat: TimeFormat }) {
         };
       })
       .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    if (upcomingBirthdays.length === 0) {
+      return 'No birthdays found.';
+    }
+
+    const nextBirthday = upcomingBirthdays[0];
+    const daysAway = differenceInCalendarDays(nextBirthday.date, today);
+
+    // Find all people with this same upcoming birthday
+    const allNamesWithSameBirthday = birthdays.filter(
+        b => b.month === nextBirthday.month && b.day === nextBirthday.day
+    ).map(b => b.name);
+
+    // Join names with "&"
+    const names = allNamesWithSameBirthday.join(' & ');
+
+    const dateStr = format(nextBirthday.date, 'MMMM do');
+    const daysStr = daysAway === 1 ? 'day away' : 'days away';
     
-    return upcomingBirthdays[0];
+    // Handle today's birthday
+    if (daysAway === 0) {
+        return `It's ${names}'s Birthday today! Happy Birthday!`;
+    }
+
+    return `Next is ${names}'s Birthday on ${dateStr} (${daysAway} ${daysStr}).`;
   };
 
-  const nextBirthday = getUpcomingBirthday();
-  const upcomingEventMessage = `Next is ${nextBirthday.name}'s Birthday on ${format(nextBirthday.date, 'MMMM do')}.`;
+  const upcomingEventMessage = getUpcomingBirthdayInfo();
 
 
   return (
